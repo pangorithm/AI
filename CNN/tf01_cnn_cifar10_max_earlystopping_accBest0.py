@@ -27,10 +27,11 @@ model.add(Dropout(0.35))
 model.add(Conv2D(64, (3,2), padding='same', activation='relu'))
 model.add(Conv2D(64, (2,3), padding='same', activation='relu'))
 model.add(MaxPooling2D(3,3))
-model.add(Dropout(0.35))
+model.add(Dropout(0.25))
 model.add(Flatten())
 model.add(Dense(64, activation='relu'))
 model.add(Dense(10, activation='softmax'))
+model.summary()
 
 # 컴파일, 훈련
 model.compile(loss='sparse_categorical_crossentropy',
@@ -38,7 +39,7 @@ model.compile(loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
 
 from keras.callbacks import EarlyStopping 
-earlyStopping = EarlyStopping(monitor='val_loss', patience=50, mode='min',
+earlyStopping = EarlyStopping(monitor='val_loss', patience=100, mode='min',
                               verbose=1, restore_best_weights=True )
 
 # model check point
@@ -48,7 +49,7 @@ mcp = ModelCheckpoint(
     mode='auto',
     verbose=1,
     save_best_only=True,
-    filepath='./mcp_data/tf_cifar10_0_7960000038146973.hdf5'
+    filepath='./gitHub/AI/CNN/mcp_data/tf_cifar10_0_8029000163078308.hdf5'
     )
 
 start_time = time.time()
@@ -59,7 +60,7 @@ model.fit(x_train, y_train, epochs=500, batch_size=32,
 end_time = time.time() - start_time
 
 # from keras.models import load_model
-# model = load_model('mcp_data/tf_cifar10_0_7960000038146973.hdf5')
+# model = load_model('./gitHub/AI/CNN/mcp_data/tf_cifar10_0_8029000163078308.hdf5')
 # mcp 모델을 로드할때 필요
 # 불러올때는 데이터 셋과 아래의 평가, 예측 항목만 필요
 
@@ -70,8 +71,9 @@ print('loss : ', loss)
 print('acc : ', acc)
 print('걸린시간 : ', end_time)
 
-# Epoch 00135: early stopping
-# 313/313 [==============================] - 2s 6ms/step - loss: 0.6033 - accuracy: 0.7960
-# loss :  0.6033015847206116
-# acc :  0.7960000038146973
-# 걸린시간 :  2349.84707570076
+# 0.4397 - accuracy: 0.8455 - val_loss: 0.5883 - val_accuracy: 0.8060
+# Epoch 00203: early stopping
+# 313/313 [==============================] - 2s 6ms/step - loss: 0.5855 - accuracy: 0.8051
+# loss :  0.585538923740387
+# acc :  0.8051000237464905
+# 걸린시간 :  3419.32487988472
