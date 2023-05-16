@@ -17,9 +17,12 @@ x_test = x_test/255.0
 
 from keras.models import load_model
 model = load_model('./gitHub/AI/CNN/mcp_data/tf_cifar10_0_7994999885559082.hdf5')
+# model = load_model('./gitHub/AI/CNN/mcp_data/tf_cifar10_0_8051000237464905.hdf5')
 # gitHub\AI\CNN\mcp_data\tf_cifar10_0_8029000163078308.hdf5
 # mcp 모델을 로드할때 필요
 # 불러올때는 데이터 셋과 아래의 평가, 예측 항목만 필요
+
+model.summary()
 
 
 # 평가, 예측

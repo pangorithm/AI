@@ -49,7 +49,7 @@ mcp = ModelCheckpoint(
     mode='auto',
     verbose=1,
     save_best_only=True,
-    filepath='./gitHub/AI/CNN/mcp_data/tf_cifar10_0_8029000163078308.hdf5'
+    filepath='./gitHub/AI/CNN/tf_cifar10_0_8029000163078308.hdf5'
     )
 
 start_time = time.time()
@@ -66,6 +66,7 @@ end_time = time.time() - start_time
 
 
 # 평가, 예측
+model.summary()
 loss, acc = model.evaluate(x_test, y_test)
 print('loss : ', loss)
 print('acc : ', acc)
