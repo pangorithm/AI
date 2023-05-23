@@ -104,14 +104,14 @@ print('걸린 시간 : ', end_time, '초')
 # In[ ]:
 
 
-Fitting 8 folds for each of 2048 candidates, totalling 16384 fits
-[LightGBM] [Warning] feature_fraction is set=0.9, colsample_bytree=1.0 will be ignored. Current value: feature_fraction=0.9
-[LightGBM] [Warning] min_data_in_leaf is set=1, min_child_samples=50 will be ignored. Current value: min_data_in_leaf=1
-최적의 파라미터 :  {'subsample': 0.5, 'reg_lambda': 1, 'reg_alpha': 0.1, 'num_leaves': 31, 'n_estimators': 500, 'min_data_in_leaf': 1, 'min_child_samples': 50, 'max_depth': 9, 'learning_rate': 0.1, 'feature_fraction': 0.9, 'colsample_bytree': 1.0}
-최적의 매개변수 :  LGBMClassifier(feature_fraction=0.9, max_depth=9, min_child_samples=50,
-               min_data_in_leaf=1, n_estimators=500, reg_alpha=0.1,
-               reg_lambda=1, subsample=0.5)
-best_score :  0.8016195109625295
-model_score :  0.8032660816068036
-걸린 시간 :  37168.82989048958 초
+# Fitting 8 folds for each of 2048 candidates, totalling 16384 fits
+# [LightGBM] [Warning] feature_fraction is set=0.9, colsample_bytree=1.0 will be ignored. Current value: feature_fraction=0.9
+# [LightGBM] [Warning] min_data_in_leaf is set=1, min_child_samples=50 will be ignored. Current value: min_data_in_leaf=1
+# 최적의 파라미터 :  {'subsample': 0.5, 'reg_lambda': 1, 'reg_alpha': 0.1, 'num_leaves': 31, 'n_estimators': 500, 'min_data_in_leaf': 1, 'min_child_samples': 50, 'max_depth': 9, 'learning_rate': 0.1, 'feature_fraction': 0.9, 'colsample_bytree': 1.0}
+# 최적의 매개변수 :  LGBMClassifier(feature_fraction=0.9, max_depth=9, min_child_samples=50,
+#                min_data_in_leaf=1, n_estimators=500, reg_alpha=0.1,
+#                reg_lambda=1, subsample=0.5)
+# best_score :  0.8016195109625295
+# model_score :  0.8032660816068036
+# 걸린 시간 :  37168.82989048958 초
 
