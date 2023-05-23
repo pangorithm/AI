@@ -15,16 +15,27 @@ from xgboost import XGBClassifier
 from lightgbm import LGBMClassifier
 from catboost import CatBoostClassifier
 
+from sklearn.covariance import EllipticEnvelope
+
 # 1. Data preprocessing #
 
 path = './medical_noshow.csv'
-medical_noshow = pd.read_csv(path)
+datasets = pd.read_csv('D:/Ai_study/C조teamProject/_data/medical_noshow.csv')
 
 # print(medical_noshow.columns)
 # print(medical_noshow.head(10))
 
-x = medical_noshow[['PatientId', 'AppointmentID', 'Gender',	'ScheduledDay', 'AppointmentDay', 'Age', 'Neighbourhood', 'Scholarship', 'Hipertension', 'Diabetes', 'Alcoholism', 'Handcap', 'SMS_received']]
-y = medical_noshow[['No-show']]
+datasets.AppointmentDay = pd.to_datetime(datasets.AppointmentDay).dt.date
+datasets.ScheduledDay = pd.to_datetime(datasets.ScheduledDay).dt.date
+datasets['PeriodBetween'] = datasets.AppointmentDay - datasets.ScheduledDay
+# convert derived datetime to int
+datasets['PeriodBetween'] = datasets['PeriodBetween'].dt.days
+# print(datasets.PeriodBetween.describe())
+x = datasets[['PatientId', 'AppointmentID', 'Gender',	'ScheduledDay', 
+              'AppointmentDay', 'PeriodBetween', 'Age', 'Neighbourhood', 
+              'Scholarship', 'Hipertension', 'Diabetes', 'Alcoholism', 
+              'Handcap', 'SMS_received']]
+y = datasets[['No-show']]
 
 # print(x.info())
 # print(y.info())
@@ -38,11 +49,24 @@ y = medical_noshow[['No-show']]
 
 ## 1-2. drop useless data ##
 
-x = x.drop(['PatientId', 'AppointmentID'], axis=1)
+x = x.drop(['PatientId', 'AppointmentID','ScheduledDay'], axis=1)
 # print(x.describe())
-
+print(x.shape)
+outliers = EllipticEnvelope(contamination=.10)      
+# 이상치 탐지 모델 생성
+outliers.fit(x[['Age']])      
+# 이상치 탐지 모델 훈련
+predictions = outliers.predict(x[['Age']])       
+# 이상치 판별 결과
+outlier_indices = np.where(predictions == -1)[0]    
+# 이상치로 판별된 행의 인덱스를 추출
+x = x.drop(outlier_indices) 
+# 데이터프레임에서 이상치 행을 삭제
+y = y.drop(outlier_indices) 
+# 데이터프레임에서 이상치 행을 삭제
+print(x.shape, y.shape)
 ## 1-3. encoding object to int ##
-
+print(x[['Age']].describe())
 encoder = LabelEncoder()
 
 ### char -> number
