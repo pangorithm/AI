@@ -77,6 +77,7 @@ model.add(Dense(10, input_dim=11))
 model.add(Dense(256, activation='relu'))
 model.add(Dense(128, activation='relu'))
 model.add(Dense(1, activation='sigmoid')) 
+model.summary()
 
 # 컴파일, 훈련
 model.compile(loss='binary_crossentropy', 
@@ -94,7 +95,7 @@ mcp = ModelCheckpoint(
     mode='auto',
     verbose=1,
     save_best_only=True,
-    filepath='./mcp/noshow01'
+    filepath='./mcp/noshow01.hdf5'
 )
 
 
@@ -108,4 +109,5 @@ end_time = time.time() - start_time
 loss, acc = model.evaluate(x_test, y_test)
 print('loss : ', loss)
 print('acc : ', acc)
+print('소요시간 : ', end_time)
 
