@@ -9,7 +9,7 @@ from sklearn.metrics import r2_score
 import time
 
 ##### 데이터 전처리 시작 #####
-path = './_data/'
+path = '.C조teamProject/_data/'
 datasets = pd.read_csv(path + 'medical_noshow.csv')
 
 print('columns : \n',datasets.columns)
