@@ -112,13 +112,18 @@ x_test = scaler.transform(x_test)
 
 ## 2-3. create model ##
 
-model = CatBoostClassifier()
+# 2. 모델
+from xgboost import XGBClassifier
+model = XGBClassifier()
 
 ## 2-4. train model ##
 
 start_time = time.time()
 
-model.fit(x_train, y_train)
+model.fit(x_train, y_train,
+          early_stopping_rounds=100,
+          eval_set = [(x_train, y_train), (x_test, y_test)],
+          eval_metric='error')
 
 result = model.score(x_test, y_test)
 score = cross_val_score(model, x_train, y_train, cv=kfold)
@@ -141,3 +146,20 @@ print('소요시간 : ', end_time)
 # plt.xlabel('importance')
 # plt.ylim(-1, n_features)
 # plt.show()
+
+# selectFromModel
+# thresholds = model.feature_importances_
+from sklearn.feature_selection import SelectFromModel
+thresholds = model.feature_importances_
+
+for thresh in thresholds:
+    selection = SelectFromModel(model, threshold=thresh, prefit=True)
+    select_x_train = selection.transform(x_train)
+    select_x_test = selection.transform(x_test)
+    print(select_x_train.shape, select_x_test.shape)
+
+    selection_model = XGBClassifier()
+    selection_model.fit(select_x_train, y_train)
+    y_predict = selection_model.predict(select_x_test)
+    score = accuracy_score(y_test, y_predict)
+    print("Thresh=%.3f, n=%d, acc:%.2f%%" %(thresh, select_x_train.shape[1], score*100))
